@@ -1,27 +1,34 @@
 import { getUsers } from "@/services/authStorage";
-import { getStudentRecordByUserId } from "@/services/studentService";
+import {
+  getStudentFeePaymentTotal,
+  getStudentRecordByUserId,
+} from "@/services/studentService";
 import { useFocusEffect } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import {
-  Bell,
-  DollarSign,
-  FileText,
-  GraduationCap,
-  TrendingUp,
-  UserCog,
-  Users,
-} from "lucide-react-native";
+import { Bell,DollarSign,FileText,GraduationCap,TrendingUp,UserCog,Users,}from "lucide-react-native";
 import React, { useCallback, useState } from "react";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AdminBarChart, AdminLineChart } from "@/components/AdminCharts";
 
+function formatRevenueAmount(amount: number): string {
+  if (amount >= 100000) {
+    return `Rs. ${(amount / 100000).toFixed(1)}L`;
+  }
+
+  if (amount >= 1000) {
+    return `Rs. ${(amount / 1000).toFixed(1)}K`;
+  }
+
+  return `Rs. ${amount}`;
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [studentCount, setStudentCount] = useState(0);
   const [staffCount, setStaffCount] = useState(0);
-  const [revenueValue, setRevenueValue] = useState("₹0");
+  const [revenueValue, setRevenueValue] = useState("Rs. 0");
   const [attendanceRate, setAttendanceRate] = useState("0%");
 
   const refreshDashboardData = useCallback(async () => {
@@ -32,23 +39,28 @@ export default function AdminDashboard() {
     setStudentCount(students.length);
     setStaffCount(staff.length);
 
-    const estimatedRevenue = students.length * 15000;
-    setRevenueValue(`₹${(estimatedRevenue / 100000).toFixed(1)}L`);
+    const studentRecords = await Promise.all(
+      students.map(async (student) => {
+        return getStudentRecordByUserId(student.id);
+      }),
+    );
+
+    const paidRevenue = studentRecords.reduce((sum, record) => {
+      return sum + getStudentFeePaymentTotal(record);
+    }, 0);
+    setRevenueValue(formatRevenueAmount(paidRevenue));
 
     let totalAttendance = 0;
     let totalPresent = 0;
 
-    await Promise.all(
-      students.map(async (student) => {
-        const record = await getStudentRecordByUserId(student.id);
-        const attendanceRecords = record.attendance ?? [];
+    for (const record of studentRecords) {
+      const attendanceRecords = record.attendance ?? [];
 
-        totalAttendance += attendanceRecords.length;
-        totalPresent += attendanceRecords.filter(
-          (item) => item.status === "present",
-        ).length;
-      }),
-    );
+      totalAttendance += attendanceRecords.length;
+      totalPresent += attendanceRecords.filter(
+        (item) => item.status === "present",
+      ).length;
+    }
 
     const averageAttendance =
       totalAttendance > 0
@@ -86,7 +98,7 @@ export default function AdminDashboard() {
       icon: Users,
     },
     {
-      label: "Revenue",
+      label: "Fee Revenue",
       value: revenueValue,
       change: "Live",
       colors: ["#16a34a", "#22c55e"] as [string, string],

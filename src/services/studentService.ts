@@ -8,6 +8,7 @@ import { getUsers } from "@/services/authStorage";
 import type {
   AssignmentRecord,
   AttendanceRecord,
+  FeePaymentRecord,
   MarkRecord,
   StudentRecord,
   StudentUser,
@@ -15,18 +16,77 @@ import type {
 
 const STUDENT_DATA_KEY = "educonnect_student_data";
 const DEFAULT_TOTAL_MAX = 100;
+export const EXAM_FEE_PER_PAPER = 90;
+export const REVALUATION_REQUEST_FEE = 400;
 
 const studentDataListeners = new Set<() => void>();
 let cachedStudentDataMap: Record<string, StudentRecord> | null = null;
 let studentDataLoadPromise: Promise<Record<string, StudentRecord>> | null =
   null;
 
-function createDefaultRecord(): StudentRecord {
+type FeePaymentCalculationInput = {
+  examPaperCount: number;
+  revaluationRequested?: boolean;
+};
+
+export type FeePaymentCalculation = {
+  examPaperCount: number;
+  examFeePerPaper: number;
+  examFeeAmount: number;
+  revaluationRequested: boolean;
+  revaluationFeeAmount: number;
+  totalAmount: number;
+};
+
+export type CreateFeePaymentInput = {
+  examPaperCount: number;
+  revaluationRequested?: boolean;
+  revaluationSubject?: string;
+};
+
+function normalizeStudentRecord(
+  record?: Partial<StudentRecord> | null,
+): StudentRecord {
   return {
-    attendance: [],
-    marks: [],
-    assignments: [],
+    attendance: Array.isArray(record?.attendance) ? record.attendance : [],
+    marks: Array.isArray(record?.marks) ? record.marks : [],
+    assignments: Array.isArray(record?.assignments) ? record.assignments : [],
+    feePayments: Array.isArray(record?.feePayments)
+      ? record.feePayments
+      : [],
   };
+}
+
+function createDefaultRecord(): StudentRecord {
+  return normalizeStudentRecord();
+}
+
+export function calculateFeePayment(
+  input: FeePaymentCalculationInput,
+): FeePaymentCalculation {
+  const examPaperCount = Math.max(0, Math.floor(input.examPaperCount || 0));
+  const revaluationRequested = Boolean(input.revaluationRequested);
+  const examFeeAmount = examPaperCount * EXAM_FEE_PER_PAPER;
+  const revaluationFeeAmount = revaluationRequested
+    ? REVALUATION_REQUEST_FEE
+    : 0;
+
+  return {
+    examPaperCount,
+    examFeePerPaper: EXAM_FEE_PER_PAPER,
+    examFeeAmount,
+    revaluationRequested,
+    revaluationFeeAmount,
+    totalAmount: examFeeAmount + revaluationFeeAmount,
+  };
+}
+
+export function getStudentFeePaymentTotal(
+  record: Pick<StudentRecord, "feePayments">,
+): number {
+  return (record.feePayments ?? []).reduce((sum, payment) => {
+    return payment.status === "paid" ? sum + payment.totalAmount : sum;
+  }, 0);
 }
 
 async function loadStudentDataMap(): Promise<Record<string, StudentRecord>> {
@@ -43,7 +103,16 @@ async function loadStudentDataMap(): Promise<Record<string, StudentRecord>> {
       }
 
       try {
-        cachedStudentDataMap = JSON.parse(raw) as Record<string, StudentRecord>;
+        const parsed = JSON.parse(raw) as Record<
+          string,
+          Partial<StudentRecord>
+        >;
+        cachedStudentDataMap = Object.fromEntries(
+          Object.entries(parsed).map(([userId, record]) => [
+            userId,
+            normalizeStudentRecord(record),
+          ]),
+        );
       } catch {
         cachedStudentDataMap = {};
       }
@@ -170,7 +239,7 @@ export async function getStudentRecordByUserId(
   userId: string,
 ): Promise<StudentRecord> {
   const map = await loadStudentDataMap();
-  return map[userId] ?? createDefaultRecord();
+  return normalizeStudentRecord(map[userId]);
 }
 
 export async function addAttendanceRecord(
@@ -178,7 +247,7 @@ export async function addAttendanceRecord(
   record: Omit<AttendanceRecord, "id" | "createdAt">,
 ): Promise<StudentRecord> {
   const map = await loadStudentDataMap();
-  const current = map[userId] ?? createDefaultRecord();
+  const current = normalizeStudentRecord(map[userId]);
   const newRecord: AttendanceRecord = {
     ...record,
     date: record.date ?? new Date().toISOString().slice(0, 10),
@@ -204,7 +273,7 @@ export async function addMarkRecord(
   record: Omit<MarkRecord, "id" | "createdAt">,
 ): Promise<StudentRecord> {
   const map = await loadStudentDataMap();
-  const current = map[userId] ?? createDefaultRecord();
+  const current = normalizeStudentRecord(map[userId]);
   const internalMarks = record.internalMarks ?? 0;
   const externalMarks = record.externalMarks ?? 0;
   const totalMarks = calculateTotalMarks(internalMarks, externalMarks);
@@ -230,13 +299,39 @@ export async function addAssignmentRecord(
   record: Omit<AssignmentRecord, "id" | "createdAt">,
 ): Promise<StudentRecord> {
   const map = await loadStudentDataMap();
-  const current = map[userId] ?? createDefaultRecord();
+  const current = normalizeStudentRecord(map[userId]);
   const newRecord: AssignmentRecord = {
     ...record,
     id: `${Date.now()}-${Math.random()}`,
     createdAt: Date.now(),
   };
   current.assignments.unshift(newRecord);
+  map[userId] = current;
+  await saveStudentDataMap(map);
+  return current;
+}
+
+export async function addFeePaymentRecord(
+  userId: string,
+  record: CreateFeePaymentInput,
+): Promise<StudentRecord> {
+  const map = await loadStudentDataMap();
+  const current = normalizeStudentRecord(map[userId]);
+  const calculation = calculateFeePayment(record);
+  const trimmedSubject = record.revaluationSubject?.trim();
+  const newRecord: FeePaymentRecord = {
+    ...calculation,
+    revaluationSubject:
+      calculation.revaluationRequested && trimmedSubject
+        ? trimmedSubject
+        : undefined,
+    status: "paid",
+    referenceNumber: `FEE-${Date.now().toString(36).toUpperCase()}`,
+    id: `${Date.now()}-${Math.random()}`,
+    createdAt: Date.now(),
+  };
+
+  current.feePayments.unshift(newRecord);
   map[userId] = current;
   await saveStudentDataMap(map);
   return current;

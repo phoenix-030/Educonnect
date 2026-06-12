@@ -2,19 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react-native";
 import React, { useState } from "react";
-import {
-    ActivityIndicator,
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    useColorScheme,
-    View,
-} from "react-native";
+import {ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView,StyleSheet,Text,TextInput, TouchableOpacity, useColorScheme,  View,} from "react-native";
 
 import { validatePasswordStrength } from "@/lib/password";
 import * as authService from "@/services/authService";

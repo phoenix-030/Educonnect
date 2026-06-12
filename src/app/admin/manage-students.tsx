@@ -2,12 +2,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import React, { useCallback, useState } from "react";
 import {
-    Alert,
-    FlatList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -73,7 +73,7 @@ export default function ManageStudentsScreen() {
             onPress={() => router.back()}
             style={styles.backButton}
           >
-            <Text style={styles.backText}>← Back</Text>
+            <Text style={styles.backText}> Back</Text>
           </TouchableOpacity>
           <Text style={styles.title}>Manage Students</Text>
         </View>
@@ -97,10 +97,10 @@ export default function ManageStudentsScreen() {
             <View style={styles.card}>
               <View style={styles.cardTextWrap}>
                 <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.meta}>Student ID: {item.loginId}</Text>
-                <Text style={styles.meta}>Email: {item.email}</Text>
+                <Text style={styles.student_D}>Student ID: {item.loginId}</Text>
+                <Text style={styles.student_D}>Email: {item.email}</Text>
                 {item.department ? (
-                  <Text style={styles.meta}>Department: {item.department}</Text>
+                  <Text style={styles.student_D}>Department: {item.department}</Text>
                 ) : null}
               </View>
               <TouchableOpacity
@@ -119,14 +119,45 @@ export default function ManageStudentsScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: "#f3f4f6" },
-  container: { flex: 1, padding: 16 },
-  headerRow: { flexDirection: "row", alignItems: "center", marginBottom: 8 },
-  backButton: { marginRight: 12 },
-  backText: { color: "#2563eb", fontWeight: "700", fontSize: 15 },
-  title: { fontSize: 22, fontWeight: "800", color: "#111827" },
-  subtitle: { fontSize: 13, color: "#6b7280", marginBottom: 12 },
-  list: { paddingBottom: 24 },
-  emptyList: { flexGrow: 1, justifyContent: "center" },
+
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  backButton: {
+    marginRight: 12,
+  },
+
+  backText: {
+    color: "#2563eb",
+    fontWeight: "700",
+    fontSize: 15,
+  },
+
+  title: {
+    fontSize: 22,
+
+    fontWeight: "800",
+    color: "#111827",
+  },
+  subtitle: {
+    fontSize: 13,
+    color: "#6b7280",
+    marginBottom: 12,
+  },
+  list: {
+    paddingBottom: 24,
+  },
+
+  emptyList: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
   card: {
     flexDirection: "row",
     alignItems: "center",
@@ -141,9 +172,23 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  cardTextWrap: { flex: 1, marginRight: 12 },
-  name: { fontSize: 16, fontWeight: "700", color: "#111827", marginBottom: 4 },
-  meta: { fontSize: 12, color: "#4b5563", marginBottom: 2 },
+  cardTextWrap: {
+    flex: 1,
+    marginRight: 12,
+  },
+
+  name: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#111827",
+    marginBottom: 4,
+  },
+
+  student_D: {
+    fontSize: 12,
+    color: "#4b5563",
+    marginBottom: 2,
+  },
   deleteButton: {
     backgroundColor: "#dc2626",
     borderRadius: 10,

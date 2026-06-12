@@ -1,33 +1,12 @@
-/*
-Mock local auth for development.
- */
+// mock auth
 import * as Crypto from "expo-crypto";
 
-import {
-  hashPassword,
-  validatePasswordStrength,
-  verifyPassword,
-} from "@/lib/password";
-import {
-  clearPasswordResetRequest,
-  clearSession,
-  deleteUser,
-  getPasswordResetRequest,
-  getSession,
-  getUsers,
-  savePasswordResetRequest,
-  saveSession,
-  saveUsers,
-} from "@/services/authStorage";
+import { hashPassword, validatePasswordStrength, verifyPassword,} from "@/lib/password";
+import { clearPasswordResetRequest,  clearSession,  deleteUser,  getPasswordResetRequest,  getSession,
+  getUsers,  savePasswordResetRequest,  saveSession,
+  saveUsers,} from "@/services/authStorage";
 import { removeStudentRecord } from "@/services/studentService";
-import type {
-  AuthUser,
-  ProfileUpdate,
-  Session,
-  SignUpInput,
-  StoredUser,
-  UserRole,
-} from "@/types/auth";
+import type {  AuthUser,  ProfileUpdate,  Session,  SignUpInput,  StoredUser,  UserRole,} from "@/types/auth";
 
 const REMEMBER_ME_MS = 365 * 24 * 60 * 60 * 1000;
 const SESSION_MS = 30 * 24 * 60 * 60 * 1000;

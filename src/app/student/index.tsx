@@ -11,6 +11,7 @@ import {
   Calendar,
   CheckCircle,
   ChevronRight,
+  CreditCard,
   Clock,
 } from "lucide-react-native";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -86,6 +87,10 @@ export default function StudentDashboard() {
     return record?.assignments?.[0] ?? null;
   }, [record]);
 
+  const latestFeePayment = useMemo(() => {
+    return record?.feePayments?.[0] ?? null;
+  }, [record]);
+
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
       <ScrollView
@@ -114,11 +119,24 @@ export default function StudentDashboard() {
             <Text style={styles.cardLabel}>CGPA</Text>
           </View>
 
-          <View style={[styles.card, styles.cardGreen]}>
-            <CheckCircle color="#ffffff" size={24} style={styles.cardIcon} />
-            <Text style={styles.cardValue}>Paid</Text>
+          <TouchableOpacity
+            activeOpacity={0.85}
+            style={[
+              styles.card,
+              latestFeePayment ? styles.cardGreen : styles.cardRed,
+            ]}
+            onPress={() => router.push("/student/fees")}
+          >
+            {latestFeePayment ? (
+              <CheckCircle color="#ffffff" size={24} style={styles.cardIcon} />
+            ) : (
+              <CreditCard color="#ffffff" size={24} style={styles.cardIcon} />
+            )}
+            <Text style={styles.cardValue}>
+              {latestFeePayment ? "Paid" : "Due"}
+            </Text>
             <Text style={styles.cardLabel}>Fee Status</Text>
-          </View>
+          </TouchableOpacity>
 
           <View style={[styles.card, styles.cardOrange]}>
             <Clock color="#ffffff" size={24} style={styles.cardIcon} />
@@ -211,7 +229,7 @@ export default function StudentDashboard() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#f3f4f6", // Light gray background matching the design
+    backgroundColor: "#f3f4f6", 
   },
   container: {
     padding: 20,
@@ -243,7 +261,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   card: {
-    width: "47%", // Slightly less than 50% to account for gap
+    width: "47%", 
     padding: 16,
     borderRadius: 16,
     shadowColor: "#000",
@@ -255,6 +273,7 @@ const styles = StyleSheet.create({
   cardBlue: { backgroundColor: "#2563eb" },
   cardPurple: { backgroundColor: "#9333ea" },
   cardGreen: { backgroundColor: "#16a34a" },
+  cardRed: { backgroundColor: "#dc2626" },
   cardOrange: { backgroundColor: "#ea580c" },
   cardIcon: {
     marginBottom: 12,

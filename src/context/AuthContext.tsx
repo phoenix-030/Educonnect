@@ -15,15 +15,8 @@ import type {
   UserRole,
 } from "@/types/auth";
 
-type AuthContextValue = {
-  user: AuthUser | null;
-  isLoading: boolean;
-  signIn: (
-    loginId: string,
-    password: string,
-    role: UserRole,
-    rememberMe: boolean,
-  ) => Promise<AuthUser>;
+type AuthContextValue = {  user: AuthUser | null;  isLoading: boolean;  
+      signIn: (    loginId: string,    password: string,    role: UserRole,    rememberMe: boolean,  ) => Promise<AuthUser>;
   signUp: (input: SignUpInput) => Promise<AuthUser>;
   updateProfile: (updates: ProfileUpdate) => Promise<AuthUser>;
   signOut: () => Promise<void>;
@@ -46,7 +39,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
           await authService.signOut();
         } catch {
-          // ignore cleanup errors
         }
         if (mounted) setUser(null);
       } finally {

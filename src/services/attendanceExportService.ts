@@ -6,7 +6,7 @@ import * as XLSX from "xlsx";
 
 import type { AttendanceRecord } from "@/types/student";
 
-const ATTENDANCE_EXPORT_HISTORY_KEY = "educonnect_attendance_export_history";
+const ATTENDANCE_EXPORT = "educonnect_attendance_export_history";
 
 export type AttendanceExportRow = {
   id: string;
@@ -81,7 +81,7 @@ async function writeWorkbookFile(
 }
 
 async function loadStoredRows(): Promise<AttendanceExportRow[]> {
-  const raw = await AsyncStorage.getItem(ATTENDANCE_EXPORT_HISTORY_KEY);
+  const raw = await AsyncStorage.getItem(ATTENDANCE_EXPORT);
 
   if (!raw) {
     return [];
@@ -107,7 +107,7 @@ export async function saveAttendanceExportRows(
   const serializedRows = rows.slice().sort((a, b) => b.createdAt - a.createdAt);
 
   await AsyncStorage.setItem(
-    ATTENDANCE_EXPORT_HISTORY_KEY,
+    ATTENDANCE_EXPORT,
     JSON.stringify(serializedRows),
   );
 

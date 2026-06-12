@@ -30,8 +30,8 @@ export default function StudentLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: '#2563eb', // Blue active color
-        tabBarInactiveTintColor: '#6b7280', // Gray inactive color
+        tabBarActiveTintColor: '#2563eb', 
+        tabBarInactiveTintColor: '#6b7280',
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >
@@ -39,6 +39,7 @@ export default function StudentLayout() {
         name="index"
         options={{
           title: 'Home',
+           animation: 'fade',
           tabBarIcon: ({ color, size }) => (
             <Home size={size} color={color} />
           ),
@@ -47,7 +48,7 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="attendance"
         options={{
-          title: 'Attendance',
+          title: 'Attendance', animation: 'fade',
           tabBarIcon: ({ color, size }) => (
             <Calendar size={size} color={color} />
           ),
@@ -56,7 +57,7 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="marks"
         options={{
-          title: 'Marks',
+          title: 'Marks', animation: 'fade',
           tabBarIcon: ({ color, size }) => (
             <BookOpen size={size} color={color} />
           ),
@@ -65,7 +66,7 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="timetable"
         options={{
-          title: 'Timetable',
+          title: 'Timetable', animation: 'fade',
           tabBarIcon: ({ color, size }) => (
             <Clock size={size} color={color} />
           ),
@@ -74,10 +75,16 @@ export default function StudentLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: 'Profile', animation: 'fade',
           tabBarIcon: ({ color, size }) => (
             <User size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="fees"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

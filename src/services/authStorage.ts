@@ -4,7 +4,7 @@ import type { Session, StoredUser } from "@/types/auth";
 
 const USERS_KEY = "educonnect_users";
 const SESSION_KEY = "@educonnect_session";
-const PASSWORD_RESET_KEY = "educonnect_password_reset";
+const PASSWORD_RESET = "educonnect_password_reset";
 
 export async function getUsers(): Promise<StoredUser[]> {
   const raw = await AsyncStorage.getItem(USERS_KEY);
@@ -52,7 +52,7 @@ export async function clearSession(): Promise<void> {
 export async function getPasswordResetRequest(
   email: string,
 ): Promise<{ email: string; otpHash: string; expiresAt: number } | null> {
-  const raw = await AsyncStorage.getItem(PASSWORD_RESET_KEY);
+  const raw = await AsyncStorage.getItem(PASSWORD_RESET);
   if (!raw) return null;
 
   try {
@@ -71,7 +71,7 @@ export async function savePasswordResetRequest(
   request: { otpHash: string; expiresAt: number },
 ): Promise<void> {
   const normalizedEmail = email.trim().toLowerCase();
-  const raw = await AsyncStorage.getItem(PASSWORD_RESET_KEY);
+  const raw = await AsyncStorage.getItem(PASSWORD_RESET);
   const allRequests = raw
     ? (JSON.parse(raw) as Record<
         string,
@@ -85,12 +85,12 @@ export async function savePasswordResetRequest(
     expiresAt: request.expiresAt,
   };
 
-  await AsyncStorage.setItem(PASSWORD_RESET_KEY, JSON.stringify(allRequests));
+  await AsyncStorage.setItem(PASSWORD_RESET, JSON.stringify(allRequests));
 }
 
 export async function clearPasswordResetRequest(email: string): Promise<void> {
   const normalizedEmail = email.trim().toLowerCase();
-  const raw = await AsyncStorage.getItem(PASSWORD_RESET_KEY);
+  const raw = await AsyncStorage.getItem(PASSWORD_RESET);
   if (!raw) return;
 
   try {
@@ -99,8 +99,8 @@ export async function clearPasswordResetRequest(email: string): Promise<void> {
       { email: string; otpHash: string; expiresAt: number }
     >;
     delete allRequests[normalizedEmail];
-    await AsyncStorage.setItem(PASSWORD_RESET_KEY, JSON.stringify(allRequests));
+    await AsyncStorage.setItem(PASSWORD_RESET, JSON.stringify(allRequests));
   } catch {
-    await AsyncStorage.removeItem(PASSWORD_RESET_KEY);
+    await AsyncStorage.removeItem(PASSWORD_RESET);
   }
 }

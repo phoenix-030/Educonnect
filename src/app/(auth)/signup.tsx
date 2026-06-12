@@ -222,7 +222,6 @@ export default function SignupScreen() {
                     </View>
                   </View>
                 )}
-
                 {userType === "student" && (
                   <View style={styles.inputGroup}>
                     <Text style={styles.inputLabel}>Department</Text>
