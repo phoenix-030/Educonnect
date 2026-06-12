@@ -20,7 +20,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  useColorScheme,
   View,
 } from "react-native";
 
@@ -39,8 +38,6 @@ const STUDENT_DEPARTMENT_OPTIONS = [
 export default function SignupScreen() {
   const router = useRouter();
   const { signUp } = useAuth();
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === "dark";
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -126,7 +123,7 @@ export default function SignupScreen() {
       >
         <View style={styles.content}>
           <LinearGradient
-            colors={isDark ? ["#2452d1", "#2d32bc88", "#6861cf"] : ["#2563eb", "#9333ea", "#4338ca"]}
+            colors={["#2563eb", "#9333ea", "#4338ca"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.gradientBackground}
@@ -143,18 +140,8 @@ export default function SignupScreen() {
               </Text>
             </View>
 
-            <View
-              style={[
-                styles.card,
-                {
-                  backgroundColor: isDark
-                    ? "rgba(30, 41, 59, 0.85)"
-                    : "rgba(255, 255, 255, 0.95)",
-                  borderColor: isDark ? "rgba(255, 255, 255, 0.1)" : "#f3f4f6",
-                },
-              ]}
-            >
-              <View style={[styles.tabsContainer, isDark && styles.tabsContainerDark]}>
+            <View style={styles.card}>
+              <View style={styles.tabsContainer}>
                 {(["student", "staff", "admin"] as const).map((type) => {
                   const isActive = userType === type;
                   return (
@@ -165,18 +152,14 @@ export default function SignupScreen() {
                         setSelectedDepartment("");
                         setShowDepartmentDropdown(false);
                       }}
-                      style={[
-                        styles.tabButton,
-                        isActive && (isDark ? styles.tabActiveDark : styles.tabActive),
-                      ]}
+                      style={[styles.tabButton, isActive && styles.tabActive]}
                     >
                       <Text
                         style={[
                           styles.tabText,
-                          isDark && styles.tabTextDark,
                           isActive
-                            ? (isDark ? styles.tabTextActiveDark : styles.tabTextActive)
-                            : (isDark ? styles.tabTextInactiveDark : styles.tabTextInactive),
+                            ? styles.tabTextActive
+                            : styles.tabTextInactive,
                         ]}
                       >
                         {type}
@@ -188,71 +171,70 @@ export default function SignupScreen() {
 
               <View style={styles.form}>
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, isDark && styles.inputLabelDark]}>Full Name</Text>
+                  <Text style={styles.inputLabel}>Full Name</Text>
                   <View style={styles.inputWrapper}>
                     <View style={styles.inputIcon}>
-                      <User size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                      <User size={20} color="#9ca3af" />
                     </View>
                     <TextInput
                       value={name}
                       onChangeText={setName}
                       placeholder="Enter your full name"
-                      placeholderTextColor={isDark ? "#64748b" : "#9ca3af"}
-                      style={[styles.input, isDark && styles.inputDark]}
+                      placeholderTextColor="#9ca3af"
+                      style={styles.input}
                     />
                   </View>
                 </View>
 
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, isDark && styles.inputLabelDark]}>Email Address</Text>
+                  <Text style={styles.inputLabel}>Email Address</Text>
                   <View style={styles.inputWrapper}>
                     <View style={styles.inputIcon}>
-                      <Mail size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                      <Mail size={20} color="#9ca3af" />
                     </View>
                     <TextInput
                       value={email}
                       onChangeText={setEmail}
                       placeholder="Enter your email"
-                      placeholderTextColor={isDark ? "#64748b" : "#9ca3af"}
+                      placeholderTextColor="#9ca3af"
                       keyboardType="email-address"
                       autoCapitalize="none"
-                      style={[styles.input, isDark && styles.inputDark]}
+                      style={styles.input}
                     />
                   </View>
                 </View>
 
                 {userType === "student" && (
                   <View style={styles.inputGroup}>
-                    <Text style={[styles.inputLabel, isDark && styles.inputLabelDark]}>Student ID</Text>
+                    <Text style={styles.inputLabel}>Student ID</Text>
                     <View style={styles.inputWrapper}>
                       <View style={styles.inputIcon}>
-                        <GraduationCap size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                        <GraduationCap size={20} color="#9ca3af" />
                       </View>
                       <TextInput
                         value={id}
                         onChangeText={setId}
                         placeholder="Enter your Student ID"
-                        placeholderTextColor={isDark ? "#64748b" : "#9ca3af"}
+                        placeholderTextColor="#9ca3af"
                         autoCapitalize="none"
-                        style={[styles.input, isDark && styles.inputDark]}
+                        style={styles.input}
                       />
                     </View>
                   </View>
                 )}
                 {userType === "student" && (
                   <View style={styles.inputGroup}>
-                    <Text style={[styles.inputLabel, isDark && styles.inputLabelDark]}>Department</Text>
+                    <Text style={styles.inputLabel}>Department</Text>
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() =>
                         setShowDepartmentDropdown(!showDepartmentDropdown)
                       }
-                      style={[styles.input, styles.dropdownTrigger, isDark && styles.inputDark]}
+                      style={[styles.input, styles.dropdownTrigger]}
                     >
                       <Text
                         style={[
                           styles.dropdownText,
-                          isDark && styles.dropdownTextDark,
                           !selectedDepartment && styles.dropdownPlaceholder,
                         ]}
                       >
@@ -260,13 +242,13 @@ export default function SignupScreen() {
                       </Text>
                       <ChevronDown
                         size={18}
-                        color={isDark ? "#94a3b8" : "#6b7280"}
+                        color="#6b7280"
                         style={styles.dropdownIcon}
                       />
                     </TouchableOpacity>
 
                     {showDepartmentDropdown && (
-                      <View style={[styles.dropdownMenu, isDark && styles.dropdownMenuDark]}>
+                      <View style={styles.dropdownMenu}>
                         {STUDENT_DEPARTMENT_OPTIONS.map((option) => {
                           const isSelected = selectedDepartment === option;
                           return (
@@ -278,15 +260,13 @@ export default function SignupScreen() {
                               }}
                               style={[
                                 styles.dropdownOption,
-                                isDark && styles.dropdownOptionDark,
-                                isSelected && (isDark ? styles.dropdownOptionActiveDark : styles.dropdownOptionActive),
+                                isSelected && styles.dropdownOptionActive,
                               ]}
                             >
                               <Text
                                 style={[
                                   styles.dropdownOptionText,
-                                  isDark && styles.dropdownOptionTextDark,
-                                  isSelected && (isDark ? styles.dropdownOptionTextActiveDark : styles.dropdownOptionTextActive),
+                                  isSelected && styles.dropdownOptionTextActive,
                                 ]}
                               >
                                 {option}
@@ -300,47 +280,47 @@ export default function SignupScreen() {
                 )}
 
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, isDark && styles.inputLabelDark]}>Password</Text>
+                  <Text style={styles.inputLabel}>Password</Text>
                   <View style={styles.inputWrapper}>
                     <View style={styles.inputIcon}>
-                      <Lock size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                      <Lock size={20} color="#9ca3af" />
                     </View>
                     <TextInput
                       secureTextEntry={!showPassword}
                       value={password}
                       onChangeText={setPassword}
                       placeholder="Enter your password"
-                      placeholderTextColor={isDark ? "#64748b" : "#9ca3af"}
+                      placeholderTextColor="#9ca3af"
                       autoCapitalize="none"
-                      style={[styles.input, styles.inputPassword, isDark && styles.inputDark]}
+                      style={[styles.input, styles.inputPassword]}
                     />
                     <TouchableOpacity
                       onPress={() => setShowPassword(!showPassword)}
                       style={styles.passwordToggle}
                     >
                       {showPassword ? (
-                        <EyeOff size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                        <EyeOff size={20} color="#9ca3af" />
                       ) : (
-                        <Eye size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                        <Eye size={20} color="#9ca3af" />
                       )}
                     </TouchableOpacity>
                   </View>
                 </View>
 
                 <View style={styles.inputGroup}>
-                  <Text style={[styles.inputLabel, isDark && styles.inputLabelDark]}>Confirm Password</Text>
+                  <Text style={styles.inputLabel}>Confirm Password</Text>
                   <View style={styles.inputWrapper}>
                     <View style={styles.inputIcon}>
-                      <Lock size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                      <Lock size={20} color="#9ca3af" />
                     </View>
                     <TextInput
                       secureTextEntry={!showConfirmPassword}
                       value={confirmPassword}
                       onChangeText={setConfirmPassword}
                       placeholder="Confirm your password"
-                      placeholderTextColor={isDark ? "#64748b" : "#9ca3af"}
+                      placeholderTextColor="#9ca3af"
                       autoCapitalize="none"
-                      style={[styles.input, styles.inputPassword, isDark && styles.inputDark]}
+                      style={[styles.input, styles.inputPassword]}
                     />
                     <TouchableOpacity
                       onPress={() =>
@@ -349,9 +329,9 @@ export default function SignupScreen() {
                       style={styles.passwordToggle}
                     >
                       {showConfirmPassword ? (
-                        <EyeOff size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                        <EyeOff size={20} color="#9ca3af" />
                       ) : (
-                        <Eye size={20} color={isDark ? "#94a3b8" : "#9ca3af"} />
+                        <Eye size={20} color="#9ca3af" />
                       )}
                     </TouchableOpacity>
                   </View>
@@ -380,12 +360,12 @@ export default function SignupScreen() {
                   </LinearGradient>
                 </TouchableOpacity>
 
-                <View style={styles.loginPromptRow}>
-                  <Text style={[styles.loginPromptText, isDark && styles.loginPromptTextDark]}>
+                <View style={styles.signupPromptRow}>
+                  <Text style={styles.loginPromptText}>
                     Already have an account?
                   </Text>
                   <TouchableOpacity onPress={() => router.push("/login")}>
-                    <Text style={[styles.loginLinkText, isDark && styles.loginLinkTextDark]}> Sign In</Text>
+                    <Text style={styles.loginLinkText}> Sign In</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -441,9 +421,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   card: {
+    backgroundColor: "#ffffff",
     borderRadius: 24,
     padding: 28,
     borderWidth: 1,
+    borderColor: "#f3f4f6",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
@@ -458,7 +440,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 24,
   },
-  tabsContainerDark: { backgroundColor: "rgba(30, 41, 59, 0.5)" },
   tabButton: {
     flex: 1,
     paddingVertical: 12,
@@ -474,24 +455,12 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 2,
   },
-  tabActiveDark: {
-    backgroundColor: "#2563eb",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
-  },
   tabText: { textTransform: "capitalize", fontSize: 14 },
-  tabTextDark: { color: "#94a3b8" },
   tabTextActive: { color: "#111827", fontWeight: "700" },
-  tabTextActiveDark: { color: "#ffffff", fontWeight: "700" },
   tabTextInactive: { color: "#6b7280", fontWeight: "600" },
-  tabTextInactiveDark: { color: "#94a3b8", fontWeight: "600" },
   form: { gap: 20 },
   inputGroup: { gap: 9 },
   inputLabel: { fontSize: 14, fontWeight: "600", color: "#374151" },
-  inputLabelDark: { color: "#e2e8f0" },
   inputWrapper: {
     position: "relative",
     flexDirection: "row",
@@ -510,11 +479,6 @@ const styles = StyleSheet.create({
     color: "#111827",
     fontSize: 16,
   },
-  inputDark: {
-    backgroundColor: "#1e293b",
-    borderColor: "#334155",
-    color: "#ffffff",
-  },
   inputPassword: { paddingRight: 48 },
   passwordToggle: { position: "absolute", right: 16, zIndex: 10, padding: 4 },
   dropdownTrigger: {
@@ -528,7 +492,6 @@ const styles = StyleSheet.create({
     color: "#111827",
     flex: 1,
   },
-  dropdownTextDark: { color: "#ffffff" },
   dropdownPlaceholder: {
     color: "#9ca3af",
   },
@@ -543,38 +506,21 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     overflow: "hidden",
   },
-  dropdownMenuDark: {
-    backgroundColor: "#1e293b",
-    borderColor: "#334155",
-  },
   dropdownOption: {
     paddingVertical: 14,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#f3f4f6",
   },
-  dropdownOptionDark: {
-    borderBottomColor: "#334155",
-  },
   dropdownOptionActive: {
     backgroundColor: "#eff6ff",
-  },
-  dropdownOptionActiveDark: {
-    backgroundColor: "rgba(37, 99, 235, 0.15)",
   },
   dropdownOptionText: {
     fontSize: 15,
     color: "#111827",
   },
-  dropdownOptionTextDark: {
-    color: "#ffffff",
-  },
   dropdownOptionTextActive: {
     color: "#1d4ed8",
-    fontWeight: "700",
-  },
-  dropdownOptionTextActiveDark: {
-    color: "#3b82f6",
     fontWeight: "700",
   },
   submitButton: {
@@ -596,14 +542,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   submitButtonText: { color: "#ffffff", fontWeight: "700", fontSize: 18 },
-  loginPromptRow: {
+  signupPromptRow: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
   },
   loginPromptText: { fontSize: 14, color: "#4b5563" },
-  loginPromptTextDark: { color: "#94a3b8" },
   loginLinkText: { fontSize: 14, fontWeight: "700", color: "#2563eb" },
-  loginLinkTextDark: { color: "#3b82f6" },
 });
