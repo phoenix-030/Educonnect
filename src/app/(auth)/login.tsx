@@ -83,8 +83,7 @@ export default function LoginScreen() {
       >
         <View style={styles.content}>
           <LinearGradient
-            colors={backgroundGradientColors as [string, string, ...string[]]}
-            start={{ x: 0, y: 0 }}
+colors={["#2563eb", "#9333ea", "#4338ca"]}            start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
             style={styles.gradientBackground}
           />
