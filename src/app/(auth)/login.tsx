@@ -68,7 +68,7 @@ export default function LoginScreen() {
   };
 
   const backgroundGradientColors = isDark
-    ? ['#1e3a8a', '#581c87', '#1e1b4b']
+    ? ['#1e3a8a', '#581c8f', '#1e1b4b']
     : ['#2563eb', '#9333ea', '#4338ca'];
 
   return (
@@ -103,9 +103,9 @@ export default function LoginScreen() {
                 styles.card,
                 {
                   backgroundColor: isDark
-                    ? 'rgba(228, 233, 240, 0.9)'
-                    : 'rgba(255, 255, 255, 0.9)',
-                  borderColor: isDark ? '#374151' : '#f3f4f6',
+                    ? 'rgba(30, 41, 59, 0.85)'
+                    : 'rgba(255, 255, 255, 0.95)',
+                  borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : '#f3f4f6',
                 },
               ]}
             >
@@ -142,13 +142,13 @@ export default function LoginScreen() {
                     </Text>
                     <View style={styles.inputWrapper}>
                       <View style={styles.inputIcon}>
-                        <GraduationCap size={20} color={isDark ? '#9ca3af' : '#6b7280'} />
+                        <GraduationCap size={20} color={isDark ? '#94a3b8' : '#6b7280'} />
                       </View>
                       <TextInput
                         value={loginId}
                         onChangeText={setLoginId}
                         placeholder="Enter your Student ID"
-                        placeholderTextColor={isDark ? '#6b7280' : '#a1a1aa'}
+                        placeholderTextColor={isDark ? '#64748b' : '#a1a1aa'}
                         autoCapitalize="none"
                         style={[styles.input, isDark && styles.inputDark]}
                       />
@@ -161,13 +161,13 @@ export default function LoginScreen() {
                     </Text>
                     <View style={styles.inputWrapper}>
                       <View style={styles.inputIcon}>
-                        <Mail size={20} color={isDark ? '#9ca3af' : '#6b7280'} />
+                        <Mail size={20} color={isDark ? '#94a3b8' : '#6b7280'} />
                       </View>
                       <TextInput
                         value={email}
                         onChangeText={setEmail}
                         placeholder="Enter your email"
-                        placeholderTextColor={isDark ? '#6b7280' : '#a1a1aa'}
+                        placeholderTextColor={isDark ? '#64748b' : '#a1a1aa'}
                         keyboardType="email-address"
                         autoCapitalize="none"
                         style={[styles.input, isDark && styles.inputDark]}
@@ -182,14 +182,14 @@ export default function LoginScreen() {
                   </Text>
                   <View style={styles.inputWrapper}>
                     <View style={styles.inputIcon}>
-                      <Lock size={20} color={isDark ? '#9ca3af' : '#6b7280'} />
+                      <Lock size={20} color={isDark ? '#94a3b8' : '#6b7280'} />
                     </View>
                     <TextInput
                       secureTextEntry={!showPassword}
                       value={password}
                       onChangeText={setPassword}
                       placeholder="Enter your password"
-                      placeholderTextColor={isDark ? '#6b7280' : '#a1a1aa'}
+                      placeholderTextColor={isDark ? '#64748b' : '#a1a1aa'}
                       autoCapitalize="none"
                       style={[styles.input, isDark && styles.inputDark, styles.inputPassword]}
                     />
@@ -198,9 +198,9 @@ export default function LoginScreen() {
                       style={styles.passwordToggle}
                     >
                       {showPassword ? (
-                        <EyeOff size={20} color={isDark ? '#9ca3af' : '#6b7280'} />
+                        <EyeOff size={20} color={isDark ? '#94a3b8' : '#6b7280'} />
                       ) : (
-                        <Eye size={20} color={isDark ? '#9ca3af' : '#6b7280'} />
+                        <Eye size={20} color={isDark ? '#94a3b8' : '#6b7280'} />
                       )}
                     </TouchableOpacity>
                   </View>
@@ -260,13 +260,13 @@ export default function LoginScreen() {
 
                 <View style={styles.signupPromptRow}>
                   <Text
-                    style={[styles.signupPromptText, { color: isDark ? '#000000' : '#4b5563' }]}
+                    style={[styles.signupPromptText, { color: isDark ? '#94a3b8' : '#4b5563' }]}
                   >
                     {"Don't have an account?"}
                   </Text>
                   <TouchableOpacity onPress={() => router.push('/signup')}>
                     <Text
-                      style={[styles.signupLinkText, { color: isDark ? '#0073ff' : '#0c54f0' }]}
+                      style={[styles.signupLinkText, { color: isDark ? '#3b82f6' : '#2563eb' }]}
                     >
                       {' '}
                       Sign Up
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     marginBottom: 24,
   },
-  tabsContainerDark: { backgroundColor: 'rgba(253, 249, 249, 1)' },
+  tabsContainerDark: { backgroundColor: 'rgba(30, 41, 59, 0.5)' },
   tabButton: {
     flex: 1,
     paddingVertical: 12,
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tabActiveButton: {
-    backgroundColor: '#f3ecec',
+    backgroundColor: '#ffffff',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -360,15 +360,15 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     fontWeight: '600',
     fontSize: 14,
-    color: '#000000',
+    color: '#6b7280',
   },
-  tabTextDark: { color: '#060606' },
-  tabActiveText: { color: '#070808', fontWeight: '700' },
+  tabTextDark: { color: '#94a3b8' },
+  tabActiveText: { color: '#000000', fontWeight: '700' },
   tabActiveTextDark: { color: '#ffffff' },
   form: { gap: 20 },
   inputGroup: { gap: 9 },
-  inputLabel: { fontSize: 14, fontWeight: '600', color: '#ffffff' },
-  inputLabelDark: { color: '#000000' },
+  inputLabel: { fontSize: 14, fontWeight: '600', color: '#374151' },
+  inputLabelDark: { color: '#e2e8f0' },
   inputWrapper: { position: 'relative', flexDirection: 'row', alignItems: 'center' },
   inputIcon: { position: 'absolute', left: 16, zIndex: 10 },
   input: {
@@ -376,17 +376,17 @@ const styles = StyleSheet.create({
     paddingLeft: 48,
     paddingRight: 16,
     paddingVertical: 14,
-    backgroundColor: '#0d5cd9',
+    backgroundColor: '#f9fafb',
     borderWidth: 1,
-    borderColor: '#ffffff',
+    borderColor: '#e5e7eb',
     borderRadius: 16,
-    color: '#ffffff',
+    color: '#111827',
     fontSize: 16,
   },
   inputDark: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-    borderColor: '#ffffff',
-    color: '#000000',
+    backgroundColor: '#1e293b',
+    borderColor: '#334155',
+    color: '#ffffff',
   },
   inputPassword: { paddingRight: 48 },
   passwordToggle: { position: 'absolute', right: 16, zIndex: 10, padding: 4 },
@@ -403,18 +403,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 6,
     borderColor: '#d1d5db',
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  checkboxDark: { borderColor: '#6b7280', backgroundColor: 'rgba(55, 65, 81, 0.5)' },
+  checkboxDark: { borderColor: '#475569', backgroundColor: '#1e293b' },
   checkboxChecked: { backgroundColor: '#2563eb', borderColor: '#2563eb' },
   checkboxCheckedDark: { backgroundColor: '#3b82f6', borderColor: '#3b82f6' },
   checkboxInner: { width: 8, height: 8, backgroundColor: '#ffffff', borderRadius: 2 },
   rememberMeText: { fontSize: 14, fontWeight: '500', color: '#4b5563' },
-  remembertext: { color: '#000000' },
-  forgotPasswordText: { fontSize: 14, fontWeight: '600', color: '#0c54f0' },
-  forgotPasswordTextDark: { color: '#0073ff' },
+  remembertext: { color: '#94a3b8' },
+  forgotPasswordText: { fontSize: 14, fontWeight: '600', color: '#2563eb' },
+  forgotPasswordTextDark: { color: '#3b82f6' },
   submitButton: {
     width: '100%',
     marginTop: 16,
