@@ -1,16 +1,29 @@
+import { AdminBarChart, AdminLineChart } from "@/components/AdminCharts";
 import { getUsers } from "@/services/authStorage";
 import {
   getStudentFeePaymentTotal,
   getStudentRecordByUserId,
 } from "@/services/studentService";
-import { useFocusEffect } from "@react-navigation/native";
-import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
-import { Bell,DollarSign,FileText,GraduationCap,TrendingUp,UserCog,Users,}from "lucide-react-native";
-import React, { useCallback, useState } from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useFocusEffect, useRouter } from "expo-router";
+import {
+  Bell,
+  DollarSign,
+  FileText,
+  GraduationCap,
+  TrendingUp,
+  UserCog,
+  Users,
+} from "lucide-react-native";
+import { useCallback, useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AdminBarChart, AdminLineChart } from "@/components/AdminCharts";
 
 function formatRevenueAmount(amount: number): string {
   if (amount >= 100000) {
@@ -128,7 +141,6 @@ export default function AdminDashboard() {
     { title: "Holiday Notice - May 20", date: "May 10, 2026" },
     { title: "Faculty Meeting Scheduled", date: "May 8, 2026" },
   ];
-
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top"]}>
