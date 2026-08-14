@@ -4,9 +4,9 @@ import {
   getMarkTotal,
   getStudentRecordByUserId,
 } from "@/services/studentService";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "expo-router";
 import { Award, BookOpen, TrendingUp } from "lucide-react-native";
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,

@@ -1,16 +1,15 @@
-import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
-import { GraduationCap, LogOut } from 'lucide-react-native';
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import { GraduationCap, LogOut } from "lucide-react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { useAuth } from '@/context/AuthContext';
-import type { UserRole } from '@/types/auth';
+import { useAuth } from "@/context/AuthContext";
+import type { UserRole } from "@/types/auth";
 
 const ROLE_LABELS: Record<UserRole, string> = {
-  student: 'Student Dashboard',
-  staff: 'Staff Dashboard',
-  admin: 'Admin Dashboard',
+  student: "Student Dashboard",
+  staff: "Staff Dashboard",
+  admin: "Admin Dashboard",
 };
 
 type RoleDashboardProps = {
@@ -23,7 +22,7 @@ export function RoleDashboard({ role }: RoleDashboardProps) {
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace('/login');
+    router.replace("/login");
   };
 
   if (!user) return null;
@@ -31,10 +30,10 @@ export function RoleDashboard({ role }: RoleDashboardProps) {
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={['#2563eb', '#9333ea', '#4338ca']}
+        colors={["#2563eb", "#9333ea", "#4338ca"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
       />
 
       <View style={styles.card}>
@@ -68,15 +67,15 @@ export function RoleDashboard({ role }: RoleDashboardProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     padding: 24,
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 24,
     padding: 28,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.1,
     shadowRadius: 15,
@@ -86,59 +85,59 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#eff6ff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#eff6ff",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 16,
   },
   badge: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#2563eb',
+    fontWeight: "700",
+    color: "#2563eb",
     letterSpacing: 1,
     marginBottom: 8,
   },
   title: {
     fontSize: 24,
-    fontWeight: '800',
-    color: '#111827',
+    fontWeight: "800",
+    color: "#111827",
     marginBottom: 8,
-    textAlign: 'center',
+    textAlign: "center",
   },
   welcome: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#374151',
+    fontWeight: "600",
+    color: "#374151",
     marginBottom: 12,
-    textAlign: 'center',
+    textAlign: "center",
   },
   meta: {
     fontSize: 14,
-    color: '#6b7280',
+    color: "#6b7280",
     marginBottom: 4,
   },
   hint: {
     fontSize: 14,
-    color: '#9ca3af',
-    textAlign: 'center',
+    color: "#9ca3af",
+    textAlign: "center",
     marginTop: 16,
     marginBottom: 24,
     lineHeight: 20,
   },
   logoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
-    backgroundColor: '#dc2626',
+    backgroundColor: "#dc2626",
     paddingVertical: 14,
     paddingHorizontal: 24,
     borderRadius: 16,
-    width: '100%',
-    justifyContent: 'center',
+    width: "100%",
+    justifyContent: "center",
   },
   logoutText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: "700",
   },
 });
