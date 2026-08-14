@@ -1,18 +1,18 @@
 import { useAuth } from "@/context/AuthContext";
 import {
-  getMarkGrade,
-  getMarkTotal,
-  getStudentRecordByUserId,
+    getMarkGrade,
+    getMarkTotal,
+    getStudentRecordByUserId,
 } from "@/services/studentService";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect } from "expo-router";
 import { Award, BookOpen, TrendingUp } from "lucide-react-native";
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
+    ActivityIndicator,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

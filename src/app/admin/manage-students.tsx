@@ -1,6 +1,5 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { useRouter } from "expo-router";
-import React, { useCallback, useState } from "react";
+import { useFocusEffect, useRouter } from "expo-router";
+import { useCallback, useState } from "react";
 import {
   Alert,
   FlatList,
@@ -100,7 +99,9 @@ export default function ManageStudentsScreen() {
                 <Text style={styles.student_D}>Student ID: {item.loginId}</Text>
                 <Text style={styles.student_D}>Email: {item.email}</Text>
                 {item.department ? (
-                  <Text style={styles.student_D}>Department: {item.department}</Text>
+                  <Text style={styles.student_D}>
+                    Department: {item.department}
+                  </Text>
                 ) : null}
               </View>
               <TouchableOpacity

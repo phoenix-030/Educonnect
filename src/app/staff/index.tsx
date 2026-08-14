@@ -1,9 +1,8 @@
 import { useAuth } from "@/context/AuthContext";
 import { getCurrentDayName, WEEKLY_SCHEDULE } from "@/lib/timetable";
 import { getUsers } from "@/services/authStorage";
-import { useFocusEffect } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import {
     BarChart3,
     Calendar,
@@ -14,7 +13,7 @@ import {
     UserCheck,
     Users,
 } from "lucide-react-native";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import {
     ScrollView,
     StyleSheet,
@@ -182,12 +181,13 @@ export default function StaffDashboard() {
           })}
         </View>
 
-        <View>
-          
-        </View>
+        <View></View>
 
         <View style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>{"Today's Classes — "}{todayName}</Text>
+          <Text style={styles.sectionTitle}>
+            {"Today's Classes — "}
+            {todayName}
+          </Text>
           {classes.length === 0 ? (
             <Text style={styles.emptyText}>
               No classes scheduled for today.
