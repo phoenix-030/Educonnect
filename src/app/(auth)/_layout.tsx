@@ -15,7 +15,6 @@ export default function AuthLayout() {
       </View>
     );
   }
-
   if (user) {
     return <Redirect href={getHomeRoute(user.role)} />;
   }

@@ -1,13 +1,7 @@
 import { Redirect, Tabs } from "expo-router";
-import {
-  GraduationCap,
-  LayoutDashboard,
-  User,
-  UserCog,
-} from "lucide-react-native";
+import {  GraduationCap, LayoutDashboard,User, UserCog,} from "lucide-react-native";
 import React from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-
 import { useAuth } from "@/context/AuthContext";
 import { getHomeRoute } from "@/lib/roleRoutes";
 

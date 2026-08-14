@@ -164,13 +164,13 @@ export default function AdminDashboard() {
           })}
         </View>
 
-        {/* Students by Department */}
+        {/*STUDENTS */}
         <View style={styles.chartCard}>
           <Text style={styles.sectionTitle}>Students by Department</Text>
           <AdminBarChart deptData={deptData} />
         </View>
 
-        {/* Revenue Trend */}
+        {/* FEES*/}
         <View style={styles.chartCard}>
           <Text style={styles.sectionTitle}>Revenue Trend (Lakhs)</Text>
           <AdminLineChart revenueData={revenueData} />

@@ -2,7 +2,19 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Lock, Mail, ShieldCheck } from "lucide-react-native";
 import React, { useState } from "react";
-import {ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView,StyleSheet,Text,TextInput, TouchableOpacity, useColorScheme,  View,} from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from "react-native";
 
 import { validatePasswordStrength } from "@/lib/password";
 import * as authService from "@/services/authService";
@@ -304,7 +316,7 @@ export default function ForgotPasswordScreen() {
             {isResetting ? (
               <ActivityIndicator color="#ffffff" />
             ) : (
-              <Text style={styles.primaryButtonText}>Reset Password</Text>
+              <Text style={styles.restpass}>Reset Password</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -388,7 +400,9 @@ const styles = StyleSheet.create({
     borderColor: "#dbe4f0",
     color: "#111827",
   },
-  inputWithPadding: { paddingLeft: 42 },
+  inputWithPadding: { 
+    paddingLeft: 42 
+  },
   secondaryButton: {
     borderRadius: 14,
     paddingVertical: 13,
@@ -397,7 +411,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#111827",
     marginBottom: 8,
   },
-  secondaryButtonText: { color: "#ffffff", fontSize: 15, fontWeight: "700" },
+  secondaryButtonText: {
+     color: "#ffffff", fontSize: 15, fontWeight: "700"
+     },
   primaryButton: {
     borderRadius: 14,
     paddingVertical: 14,
@@ -406,6 +422,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#2563eb",
     marginTop: 4,
   },
-  primaryButtonText: { color: "#ffffff", fontSize: 16, fontWeight: "800" },
-  disabledButton: { opacity: 0.7 },
+  restpass: { 
+    color: "#ffffff", fontSize: 16, fontWeight: "800" 
+  },
+  disabledButton: {
+     opacity: 0.7
+     },
 });
