@@ -365,7 +365,7 @@ export function ProfileView() {
           <View style={styles.infoBox}>
             <Mail color="#64748b" size={20} />
             <View style={styles.infoTextContainer}>
-              <Text style={styles.infoLabel}>Email</Text>
+              <Text style={styles.infoLabel}>Email </Text>
               {isEditing ? (
                 <TextInput
                   value={email}

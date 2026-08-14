@@ -38,7 +38,6 @@ export default function MarkAttendanceScreen() {
 
   useEffect(() => {
     let isMounted = true;
-
     async function loadStudents() {
       try {
         const studentUsers = await getAllStudentUsers();
@@ -66,7 +65,6 @@ export default function MarkAttendanceScreen() {
         }
       }
     }
-
     void loadStudents();
 
     return () => {
@@ -115,6 +113,7 @@ export default function MarkAttendanceScreen() {
     const firstOfYear = new Date(today.getFullYear(), 0, 1);
     applyDateRange(firstOfYear, today);
   };
+  // sign
 
   const handleSave = async () => {
     const trimmedSignature = signatureName.trim();
@@ -217,6 +216,8 @@ export default function MarkAttendanceScreen() {
                   {student.present ? "Present" : "Absent"}
                 </Text>
               </View>
+
+              {/* present absent toggle */}
               <TouchableOpacity
                 style={[
                   styles.statusPill,
@@ -226,6 +227,7 @@ export default function MarkAttendanceScreen() {
                 ]}
                 onPress={() => toggleAttendance(index)}
               >
+
                 <CheckCircle2
                   color={student.present ? "#16a34a" : "#ef4444"}
                   size={18}
@@ -242,9 +244,13 @@ export default function MarkAttendanceScreen() {
                 </Text>
               </TouchableOpacity>
             </View>
+
+
+
+
           ))
         )}
-
+{/* sign */}
         <View style={styles.signatureSection}>
           <Text style={styles.sectionTitle}>Staff Signature</Text>
           <Text style={styles.helperText}>
@@ -270,6 +276,12 @@ export default function MarkAttendanceScreen() {
             <Text style={styles.saveButtonText}>Submit Attendance</Text>
           )}
         </TouchableOpacity>
+
+
+
+{/* download excel */}
+
+
 
         <View style={styles.exportCard}>
           <Text style={styles.sectionTitle}>Download Excel</Text>

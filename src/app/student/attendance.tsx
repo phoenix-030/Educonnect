@@ -141,6 +141,7 @@ export default function AttendanceScreen() {
   }, [loadRecord]);
 
   const attendanceRecords = record?.attendance ?? [];
+
   const summary = useMemo(
     () => getAttendanceSummary(record?.attendance ?? []),
     [record?.attendance],
